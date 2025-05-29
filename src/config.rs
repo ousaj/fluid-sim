@@ -1,18 +1,17 @@
 pub static CONFIG: Config = Config {
     scene: Scene {
-        width: 1000 as f32,
-        resolution: 25 as f32,
-        // height: 600 as f32,
+        window_size: 1300 as f32,
+        resolution: 100 as f32,
         frame_rate: 60.0,
-        dt: 1.0 / (5.0),
+        time_step: 1.0 / 4.0,
         is_grid_visible: true,
         are_particles_visible: true,
         particle_iterations: 2,
         pressure_iterations: 50,
     },
     particle: Particle {
-        total: 10000, // Aguanta las 10.000 bastante bien.
-        radius: 3 as f32, // Aguanta 2, pero puede que sea mejor 3.
+        total: 1000, // Aguanta las 10.000 bastante bien.
+        radius: 5.0 , // Aguanta 2, pero puede que sea mejor 3.
     },
     environment: Environment {
         gravity: -9.81,
@@ -49,10 +48,10 @@ pub struct Environment {
 }
 
 pub struct Scene {
-    pub width: f32,
+    pub window_size: f32,
     pub resolution: f32,
     // pub height: f32,
-    pub dt: f32,
+    pub time_step: f32,
     pub are_particles_visible: bool,
     pub is_grid_visible: bool,
     pub frame_rate: f32,

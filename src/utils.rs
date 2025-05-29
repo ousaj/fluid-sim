@@ -9,15 +9,15 @@ impl Utils {
         1.0 - (y / height) * 2.0
     }
 
-    pub fn get_pixel(index: f32, width: f32) -> f32 {
-        index * width
+    pub fn get_pixel(index: usize, width: f32) -> f32 {
+        (index as f32) * width
     }
 
-    pub fn is_border(row: u32, column: u32, total_rows: u32, total_columns: u32) -> bool {
+    pub fn is_border(row: usize, column: usize, resolution: usize) -> bool {
         let is_left: bool = column == 0;
-        let is_right: bool = column == total_columns - 1;
+        let is_right: bool = column == resolution - 1;
         let is_bottom: bool = row == 0;
-        let is_top: bool = row == total_rows - 1;
+        let is_top: bool = row == resolution - 1;
         
         is_left || is_right || is_bottom || is_top
     }

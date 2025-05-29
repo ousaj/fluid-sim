@@ -7,13 +7,13 @@ use crate::position::Position;
 use crate::velocity::Velocity;
 
 use rayon::prelude::*;
-const WIDTH: f32 = CONFIG.scene.width;
-const HEIGHT: f32 = CONFIG.scene.width;
-const SPACING: f32 = HEIGHT / CONFIG.scene.resolution; // Grid cell size.
+// const WIDTH: f32 = CONFIG.scene.width;
+// const HEIGHT: f32 = CONFIG.scene.width;
+// const SPACING: f32 = HEIGHT / CONFIG.scene.resolution; // Grid cell size.
 
-const F_NUM_X: f32 = (WIDTH / SPACING) + 1.0;
-const F_NUM_Y: f32 = (HEIGHT / SPACING) + 1.0;
-const F_NUM_CELLS: usize = (F_NUM_X * F_NUM_Y) as usize;
+// const F_NUM_X: f32 = (WIDTH / SPACING) + 1.0;
+// const F_NUM_Y: f32 = (HEIGHT / SPACING) + 1.0;
+// const F_NUM_CELLS: usize = (F_NUM_X * F_NUM_Y) as usize;
 
 pub struct Scene {
     pub windsl: Windsl,
@@ -31,14 +31,14 @@ impl Scene {
         let frame_rate: f32 = CONFIG.scene.frame_rate;
         let obstacle: Obstacle = Obstacle::new(Position::new(0.0, 0.0), CONFIG.environment.obstacle_radius, Velocity::new(0.0, 0.0));
         let fluid: Fluid = Fluid::new();
-        let windsl = Windsl::new(CONFIG.scene.width as usize, CONFIG.scene.width as usize).unwrap();
+        let windsl = Windsl::new(CONFIG.scene.window_size as usize, CONFIG.scene.window_size as usize).unwrap();
         let program = create_program().unwrap();
 
         program.set();
-        program.set_resolution(CONFIG.scene.width, CONFIG.scene.width);
+        program.set_resolution(CONFIG.scene.window_size, CONFIG.scene.window_size);
 
         unsafe { 
-            gl::Viewport(0, 0, CONFIG.scene.width as i32, CONFIG.scene.width as i32);
+            gl::Viewport(0, 0, CONFIG.scene.window_size as i32, CONFIG.scene.window_size as i32);
             gl::Enable(gl::PROGRAM_POINT_SIZE);
         }
 
@@ -83,14 +83,14 @@ impl Scene {
         //         chunk[4] = cell.color.b;
         //     });
 
-        for i in 0..F_NUM_CELLS {
-            self.fluid.cell_vertices[5 * i + 2] = self.fluid.cell_color[3 * i];
-            self.fluid.cell_vertices[5 * i + 3] = self.fluid.cell_color[3 * i + 1];
-            self.fluid.cell_vertices[5 * i + 4] = self.fluid.cell_color[3 * i + 2];
-        }
+        // for i in 0..F_NUM_CELLS {
+        //     self.fluid.cell_vertices[5 * i + 2] = self.fluid.cell_color[3 * i];
+        //     self.fluid.cell_vertices[5 * i + 3] = self.fluid.cell_color[3 * i + 1];
+        //     self.fluid.cell_vertices[5 * i + 4] = self.fluid.cell_color[3 * i + 2];
+        // }
 
         self.program.set_draw_disk(false);
-        self.program.set_point_size(self.fluid.h);
+        self.program.set_point_size(self.fluid.cell_size);
 
         self.vbo.set(&self.fluid.cell_vertices);
         self.ibo.set(&self.fluid.cell_indices);
@@ -106,13 +106,13 @@ impl Scene {
     }
 
     fn draw_particles(&mut self) {
-        for i in 0..CONFIG.particle.total {
-            self.fluid.particle_vertices[5 * i]     = self.fluid.particle_pos[2 * i];
-            self.fluid.particle_vertices[5 * i + 1] = self.fluid.particle_pos[2 * i + 1];
-            self.fluid.particle_vertices[5 * i + 2] = self.fluid.particle_color[3 * i];
-            self.fluid.particle_vertices[5 * i + 3] = self.fluid.particle_color[3 * i + 1];
-            self.fluid.particle_vertices[5 * i + 4] = self.fluid.particle_color[3 * i + 2];
-        }
+        // for i in 0..CONFIG.particle.total {
+        //     self.fluid.particle_vertices[5 * i]     = self.fluid.particle_pos[2 * i];
+        //     self.fluid.particle_vertices[5 * i + 1] = self.fluid.particle_pos[2 * i + 1];
+        //     self.fluid.particle_vertices[5 * i + 2] = self.fluid.particle_color[3 * i];
+        //     self.fluid.particle_vertices[5 * i + 3] = self.fluid.particle_color[3 * i + 1];
+        //     self.fluid.particle_vertices[5 * i + 4] = self.fluid.particle_color[3 * i + 2];
+        // }
 
         self.program.set_draw_disk(true);
         self.program.set_point_size(self.fluid.particle_diameter);
@@ -140,15 +140,15 @@ impl Scene {
     // Recalculates the simulation.
     fn simulate(&mut self) {
         // Particle simulation.
-        self.fluid.integrate_particles(CONFIG.scene.dt, CONFIG.environment.gravity);
-        self.fluid.push_particles_apart(CONFIG.scene.particle_iterations);
+        self.fluid.integrate_particles();
+        self.fluid.push_particles_apart();
         self.fluid.handle_particle_collisions(&self.obstacle);
 
         // El problema lo tengo aquí.
-        self.fluid.transfer_velocities(true, CONFIG.environment.flip_ratio); // From particle, to grid.
-        self.fluid.update_particle_density();
-        self.fluid.solve_incompressibility(CONFIG.scene.pressure_iterations, CONFIG.scene.dt, CONFIG.environment.over_relaxation, CONFIG.environment.compensate_drift);
-        self.fluid.transfer_velocities(false, CONFIG.environment.flip_ratio); // From grid, to particle.
+        self.fluid.transfer_velocities(true); // From particle, to grid.
+        self.fluid.update_density();
+        self.fluid.solve_incompressibility();
+        self.fluid.transfer_velocities(false); // From grid, to particle.
 
         // Esto es más cosmético que otra cosa.
         self.fluid.update_particle_colors();
