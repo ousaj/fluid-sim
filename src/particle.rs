@@ -7,16 +7,16 @@ pub struct Particle {
     pub position: Position,
     pub color: Color,
     pub velocity: Velocity,
-    pub density: f32,
+    pub cell_index: usize,
 }
 
 impl Particle {
-    pub fn new(position: Position, color: Color) -> Self {
+    pub fn new(position: Position) -> Self {
         Particle {
-            position: Position::fromPosition(position),
-            color: Color::from_color(color),
+            position: Position::from_position(position),
+            color: Color::particle_color(),
             velocity: Velocity::new(0.0, 0.0),
-            density: 0.0
+            cell_index: 0,
         }
     }
 }

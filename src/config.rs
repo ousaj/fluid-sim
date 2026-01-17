@@ -1,60 +1,36 @@
-pub static CONFIG: Config = Config {
-    scene: Scene {
-        window_size: 1300 as f32,
-        resolution: 100 as f32,
-        frame_rate: 60.0,
-        time_step: 1.0 / 4.0,
-        is_grid_visible: true,
-        are_particles_visible: true,
-        particle_iterations: 2,
-        pressure_iterations: 50,
-    },
-    particle: Particle {
-        total: 1000, // Aguanta las 10.000 bastante bien.
-        radius: 5.0 , // Aguanta 2, pero puede que sea mejor 3.
-    },
-    environment: Environment {
-        gravity: -9.81,
-        viscosity: 0.0,
-        density: 1000.0,
-        flip_ratio: 0.9,
-        over_relaxation: 1.9,
-        obstacle_radius: 0.0,
-        compensate_drift: true,
-        color_diffusion_coeff: 0.001,
-    },
-};
+// Screen.
+pub const WINDOW_SIZE: f32 = 1000.0;
+pub const RESOLUTION: usize = 100;
+pub const FRAME_RATE: f32 = 60.0;
+pub const CELL_SIZE: f32 = WINDOW_SIZE / RESOLUTION as f32;
 
-pub struct Config {
-    pub particle: Particle,
-    pub environment: Environment,
-    pub scene: Scene,
-}
+// Particles.
+pub const TOTAL_PARTICLES: usize = RESOLUTION * RESOLUTION;
+pub const PARTICLE_RADIUS: f32 = CELL_SIZE * 0.4;
+pub const PARTICLE_COLOR: [f32; 3] = [0.6, 0.6, 1.0];
+pub const PARTICLE_VELOCITY_RANGE: [f32; 2] = [0.0, 10.0];
 
-pub struct Particle {
-    pub total: usize,
-    pub radius: f32,
-}
+// Environment.
+pub const TIME_STEP: f32 = 1.0 / 5.0;
+pub const GRAVITY: f32 = -9.81 * 5.0;
+pub const GLOW_MULTIPLIER: f32 = 6.0;
+pub const BLUR_MULTIPLIER: f32 = 16.0;
+pub const PARTICLE_ITERATIONS: usize = 2;
+pub const PRESSURE_ITERATIONS: usize = 50;
+pub const VISCOSITY: f32 = 0.0;
+pub const DENSITY: f32 = 1000.0;
+pub const FLIP_RATIO: f32 = 0.9;
+pub const OVER_RELAXATION: f32 = 1.9;
+pub const CELL_DENSITY_RANGE: [f32; 2] = [0.0, 3.0];
 
-pub struct Environment {
-    pub gravity: f32,
-    pub viscosity: f32,
-    pub density: f32,
-    pub flip_ratio: f32,
-    pub over_relaxation: f32,
-    pub obstacle_radius: f32,
-    pub compensate_drift: bool,
-    pub color_diffusion_coeff: f32,
-}
+// Visibility.
+pub const ARE_PARTICLES_BLURRED: bool = true;
+pub const IS_VELOCITY_MAPPED: bool = false;
+pub const IS_GRID_VISIBLE: bool = false;
+pub const ARE_PARTICLES_VISIBLE: bool = true;
 
-pub struct Scene {
-    pub window_size: f32,
-    pub resolution: f32,
-    // pub height: f32,
-    pub time_step: f32,
-    pub are_particles_visible: bool,
-    pub is_grid_visible: bool,
-    pub frame_rate: f32,
-    pub particle_iterations: u32,
-    pub pressure_iterations: u32,
-}
+// Obstacle.
+pub const OBSTACLE_RADIUS: f32 = 50.0;
+
+pub const TOTAL_CELLS: usize = RESOLUTION * RESOLUTION as usize;
+pub const PARTICLE_DIAMETER: f32 = PARTICLE_RADIUS * 2.0;

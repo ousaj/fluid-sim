@@ -11,11 +11,11 @@ impl Position {
             y
         }
     }
-    
-    pub fn fromPosition(position: Position) -> Self {
+
+    pub fn from_position(position: Position) -> Self {
         Position {
             x: position.x,
-            y: position.y
+            y: position.y,
         }
     }
 }

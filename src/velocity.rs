@@ -11,11 +11,4 @@ impl Velocity {
             v            
         }
     }
-
-    pub fn fromVelocity(velocity: Velocity) -> Self {
-        Velocity {
-            u: velocity.u,
-            v: velocity.v
-        } 
-    }
 }
