@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 gl = "*"
-sdl2 = { version = "*", features = ["bundled"] }
+sdl2 = { version = "*" }
 rand = "0.8"
 rayon = "1.10"
+uuid = { version = "1.17.0", features = [ "v4" ]}
+rusttype = "0.9"

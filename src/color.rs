@@ -1,3 +1,5 @@
+use crate::config::PARTICLE_COLOR;
+
 #[derive(Copy, Clone)]
 pub struct Color {
     pub r: f32,
@@ -26,15 +28,23 @@ impl Color {
         Color {
             r: 0.3,
             g: 0.3,
-            b: 0.3
+            b: 0.3,
         }
     }
 
     pub fn background_color() -> Self {
         Color {
-            r: 0.8,
-            g: 0.8,
-            b: 0.8
+            r: 0.1,
+            g: 0.1,
+            b: 0.1,
+        }
+    }
+
+    pub fn particle_color() -> Self {
+        Color {
+            r: PARTICLE_COLOR[0],
+            g: PARTICLE_COLOR[1],
+            b: PARTICLE_COLOR[2],
         }
     }
 }

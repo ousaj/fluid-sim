@@ -9,7 +9,7 @@ use gl::{
 };
 
 pub struct Shader {
-    id: GLuint,
+    pub id: GLuint,
 }
 
 impl Shader {
@@ -57,7 +57,7 @@ impl Drop for Shader {
 }
 
 pub struct Program {
-    id: GLuint,
+    pub id: GLuint,
 }
 
 impl Program {
@@ -115,6 +115,33 @@ impl Program {
         unsafe {
             let loc = gl::GetUniformLocation(self.id, name.as_ptr());
             gl::Uniform1f(loc, size);
+        }
+    }
+
+    pub fn set_blur_particles(&self, enable: bool) {
+        let name: CString = std::ffi::CString::new("uBlurParticles").unwrap();
+        
+        unsafe {
+            let loc = gl::GetUniformLocation(self.id, name.as_ptr());
+            gl::Uniform1i(loc, if enable { 1 } else { 0 });
+        }
+    }
+
+    pub fn set_glow_multiplier(&self, glow_multiplier: f32) {
+        let name: CString = std::ffi::CString::new("uGlowMultiplier").unwrap();
+
+        unsafe {
+            let loc = gl::GetUniformLocation(self.id, name.as_ptr());
+            gl::Uniform1f(loc, glow_multiplier);
+        }
+    }
+
+    pub fn set_blur_multiplier(&self, blur_multiplier: f32) {
+        let name: CString = std::ffi::CString::new("uBlurMultiplier").unwrap();
+
+        unsafe {
+            let loc = gl::GetUniformLocation(self.id, name.as_ptr());
+            gl::Uniform1f(loc, blur_multiplier);
         }
     }
 
