@@ -25,6 +25,33 @@ the simulation goes through and the data structures required to make a successfu
 At the end of the simulation, the execution details of the simulation are
 stored in the `benchmarks` folder, using a Python script, graphs can be generated
 to compare performance under different parameters.
+
+### Setup
+
+The optimal parameters I've found are already set in the `config.rs` file:
+
+- `WINDOW_SIZE = 1000.0`: Defines the window size in pixels.
+- `RESOLUTION = 80.0`: Sets the simulation's resolution. In other words,
+how many cells there are in a row or column.
+- `FRAME_RATE = 60.0`: Sets the frame rate.
+- `CELL_SIZE = WINDOW_SIZE / RESOLUTION`: Calculates the cell size, dividing
+the window size between the resolution.
+- `TOTAL_PARTICLES = RESOLUTION * RESOLUTION`: Defines the total number of
+particles rendered in the simulation.
+- `PARTICLE_RADIUS = CELL_SIZE * 0.4`: Sets the particle radius, in relation
+to the cell size.
+- `VISCOSITY = 0.0`: Defines the fluid's viscosity. In other words, the
+quantity of friction or movement limitation of the fluid in the medium.
+- `GLOW_MULTIPLIER = 6.0`: It's a multiplier that applies to the particle's glow
+intensity. This allows us to have a more realistic effect for the fluid, so that
+they don't appear round.
+- `BLUR_MULTIPLIER = 10.0`: It's a multiplier that affects to the particle's blur,
+in order to have a more realistic fluid, so that they don't appear round.
+- `FLIP_RATIO = 0.9`: A parameter used in fluid simulations to balance the
+FLIP technique, with PIC.
+- `OVER_RELAXATION = 1.9`: A parameter used in the simulation's numerical relaxation, that adjusts the speed that the calculations get solved.
+- `OBSTACLE_RADIUS = 50.0`: Defines the obstacles radius in the simulation. In our
+case, it's the cursor, whenever a left click is triggered inside the window.
  
 ## The process (How I built it)
 
