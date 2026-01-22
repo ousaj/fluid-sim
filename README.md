@@ -273,12 +273,7 @@ directory `benchmarks`.
 
 ## Video
 
-![Demo]([https://raw.githubusercontent.com/ousaj/fluid-sim/main/demo.mp4](https://youtu.be/sDcaySYN1jI))
-
-<video width="600" controls>
-  <source src="https://raw.githubusercontent.com/ousaj/fluid-sim/main/demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+https://github.com/user-attachments/assets/52550f8e-b802-42b8-b5bc-dac84823036c
 
 ## References
 
