@@ -5,6 +5,10 @@ language and the OpenGL graphics library, and also using the PIC (Particle in Ce
 and FLIP (Fluid Implicit Particle) methodologies. We explore the different phases
 the simulation goes through and the data structures required to make a successful execution in a two-dimensional grid environment.
 
+## Preview
+
+https://github.com/user-attachments/assets/52550f8e-b802-42b8-b5bc-dac84823036c
+
 ## Technologies used
 
 - Rust
@@ -270,10 +274,6 @@ python benchmarks.py
 
 This should execute the script and show the bar plot, coming from the log 
 directory `benchmarks`.
-
-## Video
-
-https://github.com/user-attachments/assets/52550f8e-b802-42b8-b5bc-dac84823036c
 
 ## References
 
