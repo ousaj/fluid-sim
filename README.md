@@ -273,7 +273,7 @@ directory `benchmarks`.
 
 ## Video
 
-![Demo](https://raw.githubusercontent.com/ousaj/fluid-sim/main//demo.mp4)
+[Demo](https://raw.githubusercontent.com/ousaj/fluid-sim/main//demo.mp4)
 
 ## References
 
