@@ -275,6 +275,8 @@ directory `benchmarks`.
 
 [Demo](https://raw.githubusercontent.com/ousaj/fluid-sim/main/demo.mp4)
 
+https://raw.githubusercontent.com/ousaj/fluid-sim/main/demo.mp4
+
 ## References
 
 - Rust Programming Language. (n.d.). https://www.rust-lang.org/
