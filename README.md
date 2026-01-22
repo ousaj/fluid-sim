@@ -273,7 +273,7 @@ directory `benchmarks`.
 
 ## Video
 
-Coming soon.
+![Demo](./demo.mp4)
 
 ## References
 
